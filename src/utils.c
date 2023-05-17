@@ -56,7 +56,7 @@ int get_default_interface(char *int_name) {
     return 0;
 }
 
-int get_local_mac(int sock, const char *iface, unsigned char *mac) {
+int get_local_mac(int sock, const char *iface, uint8_t *mac) {
     struct ifreq ifr;
     strcpy(ifr.ifr_name, iface);
     if (ioctl(sock, SIOCGIFHWADDR, &ifr) != 0) {
@@ -79,7 +79,7 @@ int get_local_ip(int sock, const char *iface, struct in_addr *ip) {
     return 0;
 }
 
-int get_local_addr(const char *iface, unsigned char *mac, struct in_addr *ip) {
+int get_local_addr(const char *iface, uint8_t *mac, struct in_addr *ip) {
     int e, s;
     s = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
     if (s == -1) {
@@ -92,7 +92,7 @@ int get_local_addr(const char *iface, unsigned char *mac, struct in_addr *ip) {
     return close(s), e ? -1 : 0;
 }
 
-char *mac2str(unsigned char *mac) {
+char *mac2str(uint8_t *mac) {
     static char buf[100];
     sprintf(buf, "%.2X:%.2X:%.2X:%.2X:%.2X:%.2X", 
         mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);

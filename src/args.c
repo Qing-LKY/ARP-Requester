@@ -24,7 +24,7 @@ char optstr[] = "i:a:n:h";
 int times;
 struct in_addr target;
 char interface[20];
-unsigned char local_mac[ETH_ALEN];
+uint8_t local_mac[ETH_ALEN];
 struct in_addr local_ip;
 
 int copy_string(char *cnf, const char *arg, int sz) {
