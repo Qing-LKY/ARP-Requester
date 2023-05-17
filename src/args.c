@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <arpa/inet.h>
+#include <linux/if_ether.h>
 
 struct option opts[] = {
     {"iface", required_argument, 0, 'i'},
@@ -23,7 +24,7 @@ char optstr[] = "i:a:n:h";
 int times;
 struct in_addr target;
 char interface[20];
-unsigned char local_mac[6];
+unsigned char local_mac[ETH_ALEN];
 struct in_addr local_ip;
 
 int copy_string(char *cnf, const char *arg, int sz) {

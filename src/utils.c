@@ -9,6 +9,7 @@
 #include <sys/ioctl.h>
 #include <net/if.h>
 #include <arpa/inet.h>
+#include <linux/if_ether.h>
 
 int get_ip_route(char *buf, int mx_siz) {
     int e; FILE *fp;
@@ -62,7 +63,7 @@ int get_local_mac(int sock, const char *iface, unsigned char *mac) {
         perror(RED "ioctl(SIOCGIFHWADDR)");
         return -1;
     } 
-    memcpy(mac, ifr.ifr_hwaddr.sa_data, 6);
+    memcpy(mac, ifr.ifr_hwaddr.sa_data, ETH_ALEN);
     return 0;
 }
 
