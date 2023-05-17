@@ -1,0 +1,14 @@
+# vscode
+.vscode/
+.clangd/
+compile_commands.json
+
+# c
+*.o
+
+# bin
+arp-send
+arp-send-static
+
+# log
+logs/
