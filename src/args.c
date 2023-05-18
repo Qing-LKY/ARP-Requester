@@ -24,6 +24,7 @@ char optstr[] = "i:a:n:h";
 int times;
 struct in_addr target;
 char interface[20];
+int ifindex;
 uint8_t local_mac[ETH_ALEN];
 struct in_addr local_ip;
 
@@ -71,7 +72,8 @@ int parse_args_callback() {
     }
     printf("Interface: %s\n", interface);
     puts(BLUE "Getting local address..." END);
-    e = get_local_addr(interface, local_mac, &local_ip);
+    e = get_local_addr(interface, local_mac, &local_ip, &ifindex);
+    printf("Interface index: %d\n", ifindex);
     printf("MAC address: %s\n", mac2str(local_mac));
     printf("IP address: %s\n", inet_ntoa(local_ip));
     return 0;

@@ -79,7 +79,18 @@ int get_local_ip(int sock, const char *iface, struct in_addr *ip) {
     return 0;
 }
 
-int get_local_addr(const char *iface, uint8_t *mac, struct in_addr *ip) {
+int get_iface_index(int sock, const char *iface, int *ind) {
+    struct ifreq ifr;
+    strcpy(ifr.ifr_name, iface);
+    if (ioctl(sock, SIOCGIFINDEX, &ifr) != 0) {
+        perror(RED "ioctl(SIOCGIFINDEX)");
+        return -1;
+    }
+    *ind = ifr.ifr_ifindex;
+    return 0;
+}
+
+int get_local_addr(const char *iface, uint8_t *mac, struct in_addr *ip, int *ind) {
     int e, s;
     s = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
     if (s == -1) {
@@ -89,7 +100,9 @@ int get_local_addr(const char *iface, uint8_t *mac, struct in_addr *ip) {
     e = get_local_mac(s, iface, mac);
     if (e != 0) return close(s), -1;
     e = get_local_ip(s, iface, ip);
-    return close(s), e ? -1 : 0;
+    if (e != 0) return close(s), -1;
+    e = get_iface_index(s, iface, ind);
+    return close(s), e;
 }
 
 char *mac2str(uint8_t *mac) {

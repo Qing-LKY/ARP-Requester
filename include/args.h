@@ -6,6 +6,7 @@
 extern int times;
 extern struct in_addr target;
 extern char interface[20];
+extern int ifindex;
 extern uint8_t local_mac[6];
 extern struct in_addr local_ip;
 
